@@ -144,7 +144,6 @@ public:
     virtual void        parseArgs(int argc, const char* const* argv);
 
 private:
-    Arch                m_arch;
     Log                    m_log;
     EventQueue            m_events;
 };

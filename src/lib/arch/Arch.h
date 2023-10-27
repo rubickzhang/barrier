@@ -91,8 +91,14 @@ class Arch : public ARCH_CONSOLE,
                 public ARCH_TASKBAR,
                 public ARCH_TIME {
 public:
-    Arch();
-    Arch(Arch* arch);
+        //! Return the singleton instance
+    /*!
+    The client must have instantiated exactly once Arch object before
+    calling this function.
+    */
+    static Arch*        getInstance();
+
+
     virtual ~Arch();
 
     //! Call init on other arch classes.
@@ -106,20 +112,19 @@ public:
     // accessors
     //
 
-    //! Return the singleton instance
-    /*!
-    The client must have instantiated exactly once Arch object before
-    calling this function.
-    */
-    static Arch*        getInstance();
 
-    static void            setInstance(Arch* s) { s_instance = s; }
+
 
     ARCH_INTERNET&        internet() const { return (ARCH_INTERNET&)m_internet; }
 
 private:
+    Arch() = default;
+    Arch(Arch* arch) = delete;
+
+private:
     static Arch*        s_instance;
-    ARCH_INTERNET        m_internet;
+    static std::mutex   s_mutex;
+    ARCH_INTERNET       m_internet;
 };
 
 //! Convenience object to lock/unlock an arch mutex

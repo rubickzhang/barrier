@@ -29,6 +29,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <mutex>
 
 enum {
     kExitSuccess      = 0, // successful completion

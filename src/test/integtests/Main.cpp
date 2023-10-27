@@ -42,8 +42,7 @@ main(int argc, char **argv)
     ArchMiscWindows::setInstanceWin32(GetModuleHandle(NULL));
 #endif
 
-    Arch arch;
-    arch.init();
+    Arch::getInstance()->init();
 
     Log log;
     log.setFilter(kDEBUG2);

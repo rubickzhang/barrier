@@ -87,8 +87,7 @@ DaemonApp::run(int argc, char** argv)
     // win32 instance needed for threading, etc.
     ArchMiscWindows::setInstanceWin32(GetModuleHandle(NULL));
 
-    Arch arch;
-    arch.init();
+    Arch::getInstance()->init();
 
     Log log;
     EventQueue events;
@@ -101,7 +100,7 @@ DaemonApp::run(int argc, char** argv)
         log.insert(new MSWindowsDebugOutputter());
 
         // default log level to system setting.
-        string logLevel = arch.setting("LogLevel");
+        string logLevel = Arch::getInstance()->setting("LogLevel");
         if (logLevel != "")
             log.setFilter(logLevel.c_str());
 
@@ -115,11 +114,11 @@ DaemonApp::run(int argc, char** argv)
             }
             else if (arg == "/install") {
                 uninstall = true;
-                arch.installDaemon();
+                Arch::getInstance()->installDaemon();
                 return kExitSuccess;
             }
             else if (arg == "/uninstall") {
-                arch.uninstallDaemon();
+                Arch::getInstance()->uninstallDaemon();
                 return kExitSuccess;
             }
             else {
@@ -138,7 +137,7 @@ DaemonApp::run(int argc, char** argv)
             mainLoop(false);
         }
         else {
-            arch.daemonize("Barrier", mainLoopStatic);
+            Arch::getInstance()->daemonize("Barrier", mainLoopStatic);
         }
 
         return kExitSuccess;

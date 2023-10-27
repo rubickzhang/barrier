@@ -45,9 +45,7 @@ main(int argc, char** argv)
     */
     setenv("OS_ACTIVITY_DT_MODE", "NO", true);
 #endif
-
-    Arch arch;
-    arch.init();
+    Arch::getInstance()->init();
 
     Log log;
     EventQueue events;

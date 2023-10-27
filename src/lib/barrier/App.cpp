@@ -246,7 +246,7 @@ void App::run_events_loop()
 MinimalApp::MinimalApp() :
     App(NULL, NULL, new ArgsBase())
 {
-    m_arch.init();
+    Arch::getInstance()->init();
     setEvents(m_events);
 }
 

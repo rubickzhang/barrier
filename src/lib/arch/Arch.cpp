@@ -22,17 +22,20 @@
 // Arch
 //
 
+//static
 Arch*                    Arch::s_instance = NULL;
+//static
+std::mutex               Arch::s_mutex;
 
-Arch::Arch()
+Arch*
+Arch::getInstance()
 {
-    assert(s_instance == NULL);
-    s_instance = this;
-}
-
-Arch::Arch(Arch* arch)
-{
-    s_instance = arch;
+    std::lock_guard<std::mutex> lock(s_mutex);
+    if (s_instance == nullptr)
+    {
+        s_instance = new Arch;
+    }
+    return s_instance;
 }
 
 Arch::~Arch()
@@ -52,9 +55,3 @@ Arch::init()
 #endif
 }
 
-Arch*
-Arch::getInstance()
-{
-    assert(s_instance != NULL);
-    return s_instance;
-}
